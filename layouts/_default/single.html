@@ -1,0 +1,240 @@
+{{ define "header" }}
+<!-- Post Header -->
+
+<script>
+    function getRandomInt(min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min)) + min; // >= min and < max
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var random_sequence = getRandomInt(1, 77);
+        // var random_sequence = 60;
+        var bg = document.getElementById("my_header")
+        bg.style.backgroundImage = "url('/img/bg/" + random_sequence + ".jpg')";
+    });
+</script>
+<style type="text/css">
+    #article_container {
+        display: flex;
+        /*background: tr;*/
+    }
+
+    .toc_wrapper {
+        width: 320px;
+
+    }
+
+    .toc {
+        position: sticky;
+        top: 0;
+        /*width: 320px;*/
+        /*padding: 15px;*/
+        background: white;
+        margin-left: 10px;
+        border-radius: 4px;
+        padding: 15px 8px;
+        margin-top: 20px;
+
+    }
+
+    .toc header h2 {
+        font-size: 24px;
+    }
+
+    .article_wrapper {
+        overflow: visible;
+        background: #f5f5f5;
+        z-index: 4;
+        position: relative;
+    }
+
+    .article_content {
+        background: #fff;
+        flex: 1;
+        margin: 20px 0;
+        padding-bottom: 20px;
+    }
+
+    header.intro-header {
+        position: relative;
+        /* Post's image */
+        background-image: url('{{ if .Params.image }}{{ .Params.image | relURL }}{{ else }}{{ .Site.Params.my_page_default_image | relURL}}{{ end }}');
+        margin-bottom: 0;
+        border-radius: 4px;
+
+    }
+
+    /*Add the transparent layer for better */
+    .container_mask {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.20);
+    }
+
+    @media screen and (max-width: 768px) {
+        .toc_wrapper {
+            display: none;
+        }
+
+        .article_wrapper {
+            overflow: hidden;
+
+
+        }
+
+        #article_container {
+            display: block;
+
+        }
+    }
+
+    @media screen and (min-width: 1400px) {
+        .container{
+            width: 1370px;
+        }
+
+    }
+
+
+    .container {
+        /*min-width: 600px;*/
+    }
+</style>
+<header id="my_header" class="intro-header">
+    <div class="container_mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        {{ range .Params.tags }}
+                        <a class="tag" href="{{ "/tags/" | relLangURL }}{{ . | urlize }}" title="{{ . }}">
+                        {{ . }}
+                        </a>
+                        {{ end }}
+                    </div>
+                    <h1>{{ .Title }}</h1>
+                    <h2 class="subheading">{{ .Params.subtitle }}</h2>
+                    <span class="meta">
+                        Posted by 
+                        {{ if .Params.author }}
+                            {{ .Params.author }}
+                        {{ else }}
+                                {{ .Site.Title }}
+                        {{ end }} 
+                        on 
+                        {{ .Date.Format "Monday, January 2, 2006" }}
+                        {{ if .Site.Params.page_view_conter }}
+                            {{ partial "page_view_counter.html" . }}
+                        {{ end }}
+                        <!-- Don't show "Last Modified on" if update happened on the same day. -->
+                        {{ if (and (not .Lastmod.IsZero) (not (eq (dateFormat "2006-01-02" .Lastmod) (dateFormat "2006-01-02" .Date)))) }}
+                        <br>Last Modified on {{ dateFormat "Monday, January 2, 2006" .Params.LastMod }}
+                        {{ end }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{{ end }}
+
+{{ define "main" }}
+<!-- Post Content -->
+<article class="article_wrapper">
+    <div class="container" id="article_container">
+        <div class="article_content">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                post-container">
+
+                {{ if not (eq (.Param "showtoc") false) }}
+
+                {{ end }}
+                {{ .Content }}
+
+                {{ if .Site.Params.reward }}
+                {{ partial "reward.html" . }}
+                {{ end }}
+
+                <hr>
+                <ul class="pager">
+                    {{ if .PrevInSection }}
+                    <li class="previous">
+                        <a href="{{ .PrevInSection.URL }}" data-toggle="tooltip" data-placement="top"
+                           title="{{ .PrevInSection.Title}}">&larr;
+                            Previous Post</a>
+                    </li>
+                    {{ end }}
+                    {{ if .NextInSection }}
+                    <li class="next">
+                        <a href="{{ .NextInSection.URL }}" data-toggle="tooltip" data-placement="top"
+                           title="{{ .NextInSection.Title}}">Next
+                            Post &rarr;</a>
+                    </li>
+                    {{ end }}
+                </ul>
+
+                {{ partial "comments.html" . }}
+
+            </div>
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-11 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                {{ if .Site.Params.featured_tags }}
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                        {{ $featured_condition_size := .Site.Params.featured_condition_size }}
+                        {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+                        {{ if gt (len $taxonomy.Pages) $featured_condition_size }}
+                        <a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" title="{{ $name }}">
+                        {{ $name }}
+                        </a>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                </section>
+                {{ end }}
+
+                <!-- Friends Blog -->
+                {{ if .Site.Params.friends }}
+                <section>
+                    <hr>
+                    <h5>FRIENDS</h5>
+                    <ul class="list-inline">
+                        {{ range .Site.Params.friend_link }}
+                        <li><a target="_blank" href="{{.href}}">{{.title}}</a></li>
+                        {{ end }}
+                    </ul>
+                </section>
+                {{ end }}
+            </div>
+        </div>
+
+        <div class="toc_wrapper">
+            <div class="toc">
+                <header>
+                    <h2>TOC</h2>
+                </header>
+                {{.TableOfContents}}
+            </div>
+
+        </div>
+
+    </div>
+
+</article>
+
+{{ end }}
