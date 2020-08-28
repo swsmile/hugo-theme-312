@@ -4,6 +4,8 @@
 
 # Main Features
 
+- Perfect workflow with [Typora](https://typora.io/)
+- Awesome built-in banners 
 - Customize Image URL
 - Well designed Table of Content
 - Support full-text search
