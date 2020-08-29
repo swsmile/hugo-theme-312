@@ -1,0 +1,4 @@
+- latex support
+- support last modify time
+- 
+锚点滚动高亮
