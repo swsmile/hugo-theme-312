@@ -8,17 +8,66 @@
         return Math.floor(Math.random() * (max - min)) + min; // >= min and < max
     }
 
+    // Randomly pick a banner pic each time enter a Post
     document.addEventListener("DOMContentLoaded", function () {
         var random_sequence = getRandomInt(1, 77);
         // var random_sequence = 60;
         var bg = document.getElementById("my_header")
         bg.style.backgroundImage = "url('/img/bg/" + random_sequence + ".jpg')";
     });
+
+    /* [start] Show highlights at TOC on page scrolling */
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            console.log("scroll")
+            $("#TableOfContents a").removeClass("current")
+            currentAnchor().addClass("current")
+        })
+    });
+
+    function tocItem(anchor) {
+        return $("[href=\"" + anchor + "\"]")
+    }
+
+    function heading(anchor) {
+        return $("[id=" + anchor.substr(1) + "]")
+    }
+
+    var _anchors = null
+    function anchors() {
+        if (!_anchors) {
+            _anchors = $("#TableOfContents a").map(function() {
+                return $(this).attr("href")
+            })
+        }
+        return _anchors
+    }
+
+    function currentAnchor() {
+        var winY = window.pageYOffset
+        var currAnchor = null
+        anchors().each(function() {
+            var y = heading(this).position().top
+            if (y < winY + window.innerHeight * 0.23) {
+                currAnchor = this
+                return
+            }
+        })
+        console.log(currAnchor);
+        return tocItem(currAnchor)
+    }
+
+    /* [end] Show highlights at TOC on page scrolling */
+
 </script>
 <style type="text/css">
-    #article_container {
-        display: flex;
-        /*background: tr;*/
+    /* highlight current section */
+   .current{
+       color: #007fff;
+   }
+   #article_container {
+       display: flex;
+       /*background: tr;*/
     }
 
     .toc_wrapper {
