@@ -16,11 +16,14 @@
         {{ else }}
             {{ .Summary }}
        {{ end }}
+
+            &emsp; ...
+            <br>  <br>
         </div>
     </a>
     <p class="post-meta">
-<!--        Posted by {{ with .Params.author }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}-->
-     {{ .Date.Format "2006-01-02" }}
+        Posted by {{ with .Params.author }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}
+        on {{ .Date.Format "2006-01-02" }}
 
     <!-- Don't show "Last Modified on" if update happened on the same day. -->
     <!-- Basically if we didn't specify last modified time at the posts, .Lastmod = .Date        -->
