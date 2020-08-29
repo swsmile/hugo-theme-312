@@ -47,7 +47,8 @@
 
     <title>{{ if .Title }}{{ .Title }}-{{ .Site.Params.SEOTitle }}{{ else }}{{ .Site.Params.SEOTitle }}{{ end }}</title>
 
-    <link rel="canonical" href="{{ .URL | relURL }}">
+<!--    Use .RelPermalink to avoid a warning where "Page.URL is deprecated and will be removed in a future release. Use .Permalink or .RelPermalink. If what you want is the front matter URL value, use .Params.ur"-->
+    <link rel="canonical" href="{{ .RelPermalink | relURL }}">
 
     <link rel="stylesheet" href="{{ "css/iDisqus.min.css" | relURL }}"/>
 	
