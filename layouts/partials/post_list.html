@@ -1,4 +1,5 @@
 <!-- post list -->
+{{ $author := .Site.Params.author }}
 {{ range $index, $element := $.Paginator.Pages }}
 <div class="post-preview">
     <a href="{{ .Permalink }}">
@@ -22,7 +23,7 @@
         </div>
     </a>
     <p class="post-meta">
-        Posted by {{ with .Params.author }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}
+        Posted by {{ with $author }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}
         on {{ .Date.Format "2006-01-02" }}
 
     <!-- Don't show "Last Modified on" if update happened on the same day. -->
