@@ -31,9 +31,13 @@
                         </li>
                         {{ end }}
                     {{ end }}
-                    
-		    {{ range .Site.Params.addtional_menus }}
-                        <li><a href="{{.href | relLangURL}}">{{.title}}</a></li>
+
+                    {{ range .Site.Params.addtional_menus }}
+                    <li><a href="{{.href | relLangURL}}">{{.title}}</a></li>
+                    {{ end }}
+
+                    {{ if .Site.Params.display_all_posts }}
+                    <li> <a href="{{ "all" | relURL }}"> ALL </a> </li>
                     {{ end }}
 
                     {{ if .Site.Params.algolia_search }}
