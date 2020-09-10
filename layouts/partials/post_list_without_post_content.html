@@ -1,5 +1,4 @@
-sssd
-{{ $paginator := .Paginate (where (where .Site.Pages "Type" "post") "IsPage" true) }}
+{{ $paginator := .Paginate (where (where .Site.Pages "Type" "post") "IsPage" true) 9999999 }}
 <!-- post list -->
 {{ $author := .Site.Params.author }}
 {{ range $index, $element := $.Paginator.Pages }}
