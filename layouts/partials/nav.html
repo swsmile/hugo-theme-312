@@ -36,7 +36,7 @@
                     <li><a href="{{.href | relLangURL}}">{{.title}}</a></li>
                     {{ end }}
 
-                    {{ if .Site.Params.display_all_posts }}
+                    {{ with .Site.Params.display_all_posts }}
                     <li> <a href="{{ "all" | relURL }}"> ALL </a> </li>
                     {{ end }}
 
