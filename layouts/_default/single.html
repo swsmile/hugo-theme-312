@@ -110,7 +110,10 @@
         background: #fff;
         flex: 1;
         margin: 20px 0;
-        padding-bottom: 20px;
+        /*padding-bottom: 20px;*/
+        overflow: auto;
+        padding: 20px 30px;
+
     }
 
     header.intro-header {
@@ -152,6 +155,12 @@
             width: 1370px;
         }
 
+    }
+
+    .post-container{
+        margin: 0;
+        width: 100%;
+        padding-right: 10px;
     }
 
 
@@ -208,10 +217,7 @@
         <div class="article_content">
 
             <!-- Post Container -->
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                post-container">
+            <div class="post-container" >
 
                 {{ if not (eq (.Param "showtoc") false) }}
 
@@ -244,10 +250,7 @@
 
             </div>
             <!-- Sidebar Container -->
-            <div class="
-                col-lg-11 col-lg-offset-1
-                col-md-10 col-md-offset-1
-                sidebar-container">
+            <div class="sidebar-container">
 
                 <!-- Featured Tags -->
                 {{ if .Site.Params.featured_tags }}
