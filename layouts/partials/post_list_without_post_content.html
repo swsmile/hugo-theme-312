@@ -15,15 +15,12 @@
     </a>
     <p class="post-meta">
         Posted by {{ with $author }}{{ . }}{{ else }}{{ .Site.Title }}{{ end }}
-        on {{ .Date.Format "2006-01-02" }}
+        on {{ .Date.Format "2006-01-02" }}, Last Modified on {{ .Lastmod.Format "2006-01-02" }}
 
-        <!-- Don't show "Last Modified on" if update happened on the same day. -->
-        <!-- Basically if we didn't specify last modified time at the posts, .Lastmod = .Date        -->
-        {{ if (and (not .Lastmod.IsZero) (not (eq (dateFormat "2006-01-02" .Lastmod) (dateFormat "2006-01-02" .Date)))) }}
-        <br>Last Modified on {{ dateFormat "Monday, January 2, 2006" .Params.LastMod }}
-        {{ end }}
+        <!--                        use on debug, category page-->
+        <!--                        {{ .Date.Format "2006-01-02T15:04:05Z07:00" }},-->
+        <!--                        Last Modified on {{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}-->
 
-    </p>
 
 </div>
 <hr>
