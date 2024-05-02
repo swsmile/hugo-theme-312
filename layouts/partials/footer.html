@@ -24,7 +24,7 @@
                         </a>
                     </li>
 		    {{ end }}
-                    
+
                     {{ with .Site.Params.social.twitter }}
                     <li>
                         <a href="{{ . }}">
@@ -330,5 +330,5 @@
 {{ end }}
 
 {{ if .Site.GoogleAnalytics }}
-{{ template "_internal/google_analytics_async.html" . }}
+{{ template "_internal/google_analytics.html" . }}
 {{ end }}
