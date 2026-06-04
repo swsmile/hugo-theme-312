@@ -13,5 +13,5 @@ var disq = new iDisqus('disqus-comment', {
 });
 </script>
 {{ if .Site.Config.Services.Disqus.Shortname }}
-{{ template "_internal/disqus.html" . }}
+  {{ template "_internal/disqus.html" . }}
 {{ end }}
